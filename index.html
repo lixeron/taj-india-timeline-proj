@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Taj India Timeline (1986–Present)</title>
+
+  <style>
+    :root{ --bg:#0b0b0e; --card:#14161a; --accent:#ff7a00; --text:#ffffff; }
+    *{ box-sizing:border-box; }
+    body{ margin:0; background:var(--bg); color:var(--text);
+          font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; }
+
+    /* Top orange title bar */
+    header{ position:sticky; top:0; z-index:10; background:var(--accent);
+            padding:18px 20px; box-shadow:0 6px 18px rgba(0,0,0,.25); }
+    header h1{ margin:0; font-size:clamp(22px,3vw,30px); letter-spacing:.3px; }
+
+    /* Main container */
+    .container{ max-width:900px; margin:0 auto; padding:24px 20px; }
+
+    /* Timeline layout */
+    .timeline{ margin-top:60px; position:relative; }
+    .event{ display:flex; align-items:flex-start; margin-bottom:80px; gap:24px; }
+    .date{ flex:0 0 130px; font-weight:900; font-size:26px; color:var(--accent); }
+    .content{
+      flex:1; background:var(--card); padding:20px; border-radius:12px;
+      box-shadow:0 4px 16px rgba(0,0,0,0.3);
+      display:flex; align-items:center; gap:18px;
+    }
+    .content img{
+      width:180px; height:120px; object-fit:cover; border-radius:10px; flex-shrink:0;
+    }
+    .text-block{ flex:1; }
+    .text-block h2{ margin:0 0 6px 0; font-size:18px; font-weight:700; }
+
+    /* Fade-in animation */
+    .reveal{ opacity:0; transform:translateY(16px);
+             transition:opacity .5s ease, transform .5s ease; }
+    .reveal.show{ opacity:1; transform:none; }
+
+    /* Mobile */
+    @media (max-width:640px){
+      .event{ flex-direction:column; }
+      .content{ flex-direction:column; }
+      .content img{ width:100%; height:auto; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Taj India Timeline (1986–Present)</h1>
+  </header>
+
+  <main class="container">
+    <section class="timeline">
+
+      <!-- 1) 1986 -->
+      <div class="event">
+        <div class="date">1986</div>
+        <div class="content" data-desc="./dates/1986.txt">
+          <img src="test1.png" alt="Early Taj India / Royal Taj">
+          <div class="text-block">
+            <h2>Founding Roots: Royal Taj brings Indian cuisine to Birmingham</h2>
+            <p class="desc"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2) 1994 -->
+      <div class="event">
+        <div class="date">1994</div>
+        <div class="content" data-desc="./dates/1994.txt">
+          <div class="text-block">
+            <h2>Taj India opens on Highland Ave with $5.95 lunch buffet</h2>
+            <p class="desc"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3) 2006 -->
+      <div class="event">
+        <div class="date">2006</div>
+        <div class="content" data-desc="./dates/2006.txt">
+          <div class="text-block">
+            <h2>Menu expansion reflects growing South Asian presence</h2>
+            <p class="desc"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4) 2012 -->
+      <div class="event">
+        <div class="date">2012</div>
+        <div class="content" data-desc="./dates/2012.txt">
+          <div class="text-block">
+            <h2>Holi celebration showcased — major social media moment</h2>
+            <p class="desc"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5) 2020 (COVID) -->
+      <div class="event">
+        <div class="date">2020</div>
+        <div class="content" data-desc="./dates/2020-covid.txt">
+          <div class="text-block">
+            <h2>COVID response: health messaging & safety measures</h2>
+            <p class="desc"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6) 2020 — Lease extension -->
+      <div class="event">
+        <div class="date">2020</div>
+        <div class="content" data-desc="./dates/2020-lease.txt">
+          <div class="text-block">
+            <h2>Lease extension ensures stability during uncertainty</h2>
+            <p class="desc"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7) 2023 — Redevelopment -->
+      <div class="event">
+        <div class="date">2023</div>
+        <div class="content" data-desc="./dates/2023-redev.txt">
+          <div class="text-block">
+            <h2>Highland Ave redevelopment triggers relocation decision</h2>
+            <p class="desc"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8) 2023 — Relocation -->
+      <div class="event">
+        <div class="date">2023</div>
+        <div class="content" data-desc="./dates/2023-relocate.txt">
+          <div class="text-block">
+            <h2>Move to historic Fire Station No. 22 is announced</h2>
+            <p class="desc"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9) 2024 — Website evolution -->
+      <div class="event">
+        <div class="date">2024</div>
+        <div class="content" data-desc="./dates/2024-website.txt">
+          <div class="text-block">
+            <h2>Digital presence evolves — old vs. new website</h2>
+            <p class="desc"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10) 2025 — Cultural impact -->
+      <div class="event">
+        <div class="date">2025</div>
+        <div class="content" data-desc="./dates/2025-culturalimpact.txt">
+          <div class="text-block">
+            <h2>Long-standing cultural role in Birmingham’s food identity</h2>
+            <p class="desc"></p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    // Fade in when entering view; reset when leaving
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) e.target.classList.add('show');
+        else e.target.classList.remove('show');
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.event').forEach((el) => {
+      el.classList.add('reveal');
+      observer.observe(el);
+    });
+
+    // Load descriptions from /dates/*.txt into each .content that has data-desc
+    document.querySelectorAll('.content[data-desc]').forEach(async (card) => {
+      const target = card.querySelector('.desc');
+      if (!target) return;
+      try {
+        const res = await fetch(card.getAttribute('data-desc'), { cache: 'no-store' });
+        if (!res.ok) throw new Error(res.statusText);
+        const text = await res.text();
+        target.textContent = text.trim();
+      } catch (err) {
+        target.textContent = "(Description unavailable)";
+        console.error("Failed to load:", card.getAttribute('data-desc'), err);
+      }
+    });
+  </script>
+</body>
+</html>
