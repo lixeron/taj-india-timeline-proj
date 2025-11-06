@@ -4,16 +4,50 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Taj India Timeline (1986–Present)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit:ital@0;1&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
-    :root{ --bg:#0b0b0e; --card:#14161a; --accent:#ff7a00; --text:#ffffff; }
-    *{ box-sizing:border-box; }
-    body{ margin:0; background:var(--bg); color:var(--text);
-          font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; }
+        /* Indian-style headings */
+    h1, h2, h3 {
+      font-family: "Tiro Devanagari Sanskrit", serif;
+      letter-spacing: .3px;
+      color: #6b4000; /* deep brown-gold like the logo frame */
+    }
 
+    /* Keep header title white on the orange bar */
+    header h1 {
+      color: #ffffff;
+      font-family: "Tiro Devanagari Sanskrit", serif;
+      font-weight: 900;
+    }
+
+    /* Global Variables */
+    :root{ 
+      --bg:#0b0b0e;
+      --card:#bebfc2; 
+      --accent:#ff7a00; 
+      --text:#ffffff; 
+    }
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      color: #1c1c1c; /* Normal Text */
+      font: 16px/1.6 "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+      /* Warm Taj-India inspired gradient background */
+      background-color: #f9f6ef;
+      background-image:
+        radial-gradient(circle at top left, rgba(255,122,0,0.16), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(19,136,8,0.16), transparent 60%),
+
+    }
+      .content { color: #ffffff; }
     /* Top orange title bar */
     header{ position:sticky; top:0; z-index:10; background:var(--accent);
-            padding:18px 20px; box-shadow:0 6px 18px rgba(0,0,0,.25); }
+            padding:18px 20px; box-shadow:0 6px 18px rgba(0,0,0,.25); 
+            text-align: center;
+        }
     header h1{ margin:0; font-size:clamp(22px,3vw,30px); letter-spacing:.3px; }
 
     /* Main container */
@@ -22,21 +56,25 @@
     /* Timeline layout */
     .timeline{ margin-top:60px; position:relative; }
     .event{ display:flex; align-items:flex-start; margin-bottom:80px; gap:24px; }
-    .date{ flex:0 0 130px; font-weight:900; font-size:26px; color:var(--accent); }
+    .date{ flex:0 0 130px; font-weight:900; font-size:33px; color:var(--accent); }
     .content{
       flex:1; background:var(--card); padding:20px; border-radius:12px;
-      box-shadow:0 4px 16px rgba(0,0,0,0.3);
+      box-shadow:0 4px 16px rgba(0,0,0,.3);
       display:flex; align-items:center; gap:18px;
+      border:1px solid rgba(207,162,74,.18); /* subtle gold edge */
     }
+
     .content img{
-      width:180px; height:120px; object-fit:cover; border-radius:10px; flex-shrink:0;
+      width:220px; height:150px; object-fit:cover; border-radius:12px; flex-shrink:0;
+      border:1px solid rgba(207,162,74,.35); /* thin gold ring */
+      box-shadow:0 6px 20px rgba(0,0,0,.35);
     }
     .text-block{ flex:1; }
     .text-block h2{ margin:0 0 6px 0; font-size:18px; font-weight:700; }
 
     /* Fade-in animation */
     .reveal{ opacity:0; transform:translateY(16px);
-             transition:opacity .5s ease, transform .5s ease; }
+             transition:opacity 2.0s ease, transform 2.0s ease; }
     .reveal.show{ opacity:1; transform:none; }
 
     /* Mobile */
@@ -45,10 +83,92 @@
       .content{ flex-direction:column; }
       .content img{ width:100%; height:auto; }
     }
+
+
+
+        /* ===== Intro Overlay ===== */
+    #intro{
+      position: fixed;
+      inset: 0;
+      z-index: 9999;             /* sits above everything */
+      background: radial-gradient(1200px 800px at 50% 50%, #101218 0%, #0b0b0e 60%, #06070a 100%);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    #intro.hide{
+      opacity: 0;
+      transform: scale(1.03);    /* tiny “whoosh” as it fades */
+      pointer-events: none;
+    }
+
+    /* Centered title text */
+    #intro .intro-content{
+      position: relative;
+      text-align: center;
+      color: var(--text);
+      padding: 24px 28px;
+      z-index: 2;
+    }
+    #intro .intro-content h1{
+      margin: 0 0 10px 0;
+      font-size: clamp(28px, 6vw, 56px);
+      font-weight: 900;
+      letter-spacing: .5px;
+    }
+    #intro .byline{
+      margin: 0;
+      opacity: .85;
+      font-size: clamp(14px, 2.5vw, 18px);
+    }
+    #intro .hint{
+      margin-top: 12px;
+      opacity: .6;
+      font-size: 14px;
+    }
+
+    /* Animated sparkles layer */
+    #intro .intro-bg{
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        radial-gradient(3.0px 3.0px at 20% 30%, rgba(255,255,255,.45) 0 40%, transparent 41%) repeat,
+        radial-gradient(3.0px 3.0px at 70% 60%, rgba(255,255,255,.38) 0 40%, transparent 41%) repeat,
+        radial-gradient(2.5px 2.5px at 40% 80%, rgba(255,255,255,.35) 0 40%, transparent 41%) repeat,
+        radial-gradient(2.5px 2.5px at 85% 20%, rgba(255,255,255,.42) 0 40%, transparent 41%) repeat;
+      background-size: 300px 300px, 380px 380px, 260px 260px, 420px 420px;
+      animation: drift1 16s linear infinite, drift2 28s linear infinite reverse;
+      filter: drop-shadow(0 0 2px rgba(255,255,255,.25));
+      opacity: .99;
+      filter: drop-shadow(0 0 3px rgba(255,255,255,.4));
+    }
+
+    /* subtle drifting to make sparkles move */
+    @keyframes drift1{
+      0%   { background-position: 0 0, 0 0, 0 0, 0 0; }
+      100% { background-position: 300px 240px, -280px -210px, 220px -200px, -300px 260px; }
+    }
+    @keyframes drift2{
+      0%   { transform: scale(1); }
+      100% { transform: scale(1.04); }
+    }
+
+
   </style>
 </head>
 
 <body>
+  <!-- Intro Overlay -->
+<div id="intro">
+  <div class="intro-bg"></div>
+  <div class="intro-content">
+    <h1>Taj India Timeline Project</h1>
+    <p class="byline">By Ethan Tran, Elijah Steele, Nyla Ahmed, Rahazia Young, Harish Thirunavu</p>
+    <p class="hint">==========================</p>
+  </div>
+</div>
   <header>
     <h1>Taj India Timeline (1986–Present)</h1>
   </header>
@@ -60,108 +180,109 @@
       <div class="event">
         <div class="date">1986</div>
         <div class="content" data-desc="./dates/1986.txt">
-          <img src="test1.png" alt="Early Taj India / Royal Taj">
+          <!-- Optional image slot -->
+          <img src="images/test1.png" alt="Taj India logo icon">
           <div class="text-block">
-            <h2>Founding Roots: Royal Taj brings Indian cuisine to Birmingham</h2>
+            <h2>Royal Taj opens, introducing Indian cuisine to Birmingham</h2>
             <p class="desc"></p>
           </div>
         </div>
       </div>
 
-      <!-- 2) 1994 -->
+      <!-- 2) July 20, 1994 -->
       <div class="event">
-        <div class="date">1994</div>
+        <div class="date">July 20, 1994</div>
         <div class="content" data-desc="./dates/1994.txt">
           <div class="text-block">
-            <h2>Taj India opens on Highland Ave with $5.95 lunch buffet</h2>
+            <h2>Taj India opens on Highland Ave with $5.95 buffet</h2>
             <p class="desc"></p>
           </div>
         </div>
       </div>
 
-      <!-- 3) 2006 -->
+      <!-- 3) November 14, 2012 -->
       <div class="event">
-        <div class="date">2006</div>
-        <div class="content" data-desc="./dates/2006.txt">
-          <div class="text-block">
-            <h2>Menu expansion reflects growing South Asian presence</h2>
-            <p class="desc"></p>
-          </div>
-        </div>
-      </div>
-
-      <!-- 4) 2012 -->
-      <div class="event">
-        <div class="date">2012</div>
+        <div class="date">November 14, 2012</div>
         <div class="content" data-desc="./dates/2012.txt">
           <div class="text-block">
-            <h2>Holi celebration showcased — major social media moment</h2>
+            <h2>First Holi Facebook post builds digital connection</h2>
             <p class="desc"></p>
           </div>
         </div>
       </div>
 
-      <!-- 5) 2020 (COVID) -->
+      <!-- 4) Summer 2019 -->
       <div class="event">
-        <div class="date">2020</div>
+        <div class="date">Summer 2019</div>
+        <div class="content" data-desc="./dates/2019.txt">
+          <div class="text-block">
+            <h2>25th Anniversary and reflections on Highland Plaza’s future</h2>
+            <p class="desc"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5) March 13, 2020 -->
+      <div class="event">
+        <div class="date">March 13, 2020</div>
         <div class="content" data-desc="./dates/2020-covid.txt">
           <div class="text-block">
-            <h2>COVID response: health messaging & safety measures</h2>
+            <h2>COVID safety post highlights health and community care</h2>
             <p class="desc"></p>
           </div>
         </div>
       </div>
 
-      <!-- 6) 2020 — Lease extension -->
+      <!-- 6) June 21, 2020 -->
       <div class="event">
-        <div class="date">2020</div>
+        <div class="date">June 21, 2020</div>
         <div class="content" data-desc="./dates/2020-lease.txt">
           <div class="text-block">
-            <h2>Lease extension ensures stability during uncertainty</h2>
+            <h2>Lease extension confirms stability during uncertainty</h2>
             <p class="desc"></p>
           </div>
         </div>
       </div>
 
-      <!-- 7) 2023 — Redevelopment -->
+      <!-- 7) July 5, 2023 -->
       <div class="event">
-        <div class="date">2023</div>
+        <div class="date">July 5, 2023</div>
         <div class="content" data-desc="./dates/2023-redev.txt">
           <div class="text-block">
-            <h2>Highland Ave redevelopment triggers relocation decision</h2>
+            <h2>Redevelopment forces relocation decision</h2>
             <p class="desc"></p>
           </div>
         </div>
       </div>
 
-      <!-- 8) 2023 — Relocation -->
+      <!-- 8) Summer 2023 -->
       <div class="event">
-        <div class="date">2023</div>
+        <div class="date">Summer 2023</div>
         <div class="content" data-desc="./dates/2023-relocate.txt">
           <div class="text-block">
-            <h2>Move to historic Fire Station No. 22 is announced</h2>
+            <h2>Relocation to historic Fire Station No. 22 begins</h2>
             <p class="desc"></p>
           </div>
         </div>
       </div>
 
-      <!-- 9) 2024 — Website evolution -->
+      <!-- 9) November 2023 -->
       <div class="event">
-        <div class="date">2024</div>
-        <div class="content" data-desc="./dates/2024-website.txt">
+        <div class="date">November 2023</div>
+        <div class="content" data-desc="./dates/2023-demo.txt">
           <div class="text-block">
-            <h2>Digital presence evolves — old vs. new website</h2>
+            <h2>Demolition of Highland Plaza marks end of an era</h2>
             <p class="desc"></p>
           </div>
         </div>
       </div>
 
-      <!-- 10) 2025 — Cultural impact -->
+      <!-- 10) October 2025 -->
       <div class="event">
-        <div class="date">2025</div>
-        <div class="content" data-desc="./dates/2025-culturalimpact.txt">
+        <div class="date">October 2025</div>
+        <div class="content" data-desc="./dates/2025-award.txt">
           <div class="text-block">
-            <h2>Long-standing cultural role in Birmingham’s food identity</h2>
+            <h2>National recognition — Taj India named Alabama’s top Indian restaurant</h2>
             <p class="desc"></p>
           </div>
         </div>
@@ -198,6 +319,21 @@
         console.error("Failed to load:", card.getAttribute('data-desc'), err);
       }
     });
+
+    
+
+        // Intro overlay: click anywhere to hide
+    (function(){
+      const intro = document.getElementById('intro');
+      if(!intro) return;
+      const dismiss = () => intro.classList.add('hide');
+      intro.addEventListener('click', dismiss);
+      // Accessibility: also allow Enter/Space
+      intro.tabIndex = 0;
+      intro.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') dismiss();
+      });
+    })();
   </script>
 </body>
 </html>
