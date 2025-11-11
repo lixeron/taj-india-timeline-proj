@@ -7,50 +7,129 @@
   <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit:ital@0;1&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
-        /* Indian-style headings */
+    /* Animated saffron "steam" along sides */
+    .steam {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 220px;               /* slightly wider, but we hide overflow-x */
+      z-index: 1;                 /* between bg (0) and content (2) */
+      pointer-events: none;
+      overflow: hidden;
+      filter: blur(36px) saturate(112%);
+      opacity: .55;
+    }
+    .steam.left { left: 0; }
+    .steam.right { right: 0; }
+
+    .steam::before,
+    .steam::after{
+      content: "";
+      position: absolute; left: 50%;
+      width: 260px; height: 380px;
+      border-radius: 50%;
+      transform: translateX(-50%) translateY(100%);
+      background: radial-gradient(closest-side, rgba(255,122,0,.32), rgba(255,122,0,0) 70%),
+                  radial-gradient(closest-side, rgba(207,162,74,.26), rgba(207,162,74,0) 70%);
+      opacity: .75;
+      animation: wisp 10s ease-in-out infinite;
+    }
+    .steam::after{
+      width: 300px; height: 420px;
+      background: radial-gradient(closest-side, rgba(255,170,60,.28), rgba(255,170,60,0) 70%),
+                  radial-gradient(closest-side, rgba(207,162,74,.20), rgba(207,162,74,0) 70%);
+      opacity: .6;
+      animation: wisp2 13s ease-in-out infinite;
+      animation-delay: 2.2s;
+    }
+    .steam.left::before  { animation-delay: .0s; }
+    .steam.left::after   { animation-delay: 2.2s; }
+    .steam.right::before { animation-delay: 1.1s; }
+    .steam.right::after  { animation-delay: 3.1s; }
+
+    @keyframes wisp{
+      0%   { transform: translateX(-50%) translateY(100%) scale(0.95); opacity:.10; }
+      30%  { transform: translateX(-45%) translateY(45%)  scale(1.00); opacity:.35; }
+      60%  { transform: translateX(-55%) translateY(10%)  scale(1.06); opacity:.55; }
+      100% { transform: translateX(-50%) translateY(-40%) scale(1.00); opacity:.00; }
+    }
+    @keyframes wisp2{
+      0%   { transform: translateX(-50%) translateY(100%) scale(0.92); opacity:.05; }
+      35%  { transform: translateX(-53%) translateY(50%)  scale(1.02); opacity:.30; }
+      70%  { transform: translateX(-47%) translateY(15%)  scale(1.07); opacity:.50; }
+      100% { transform: translateX(-50%) translateY(-35%) scale(1.00); opacity:.00; }
+    }
+
+    /* Indian-style headings */
     h1, h2, h3 {
       font-family: "Tiro Devanagari Sanskrit", serif;
       letter-spacing: .3px;
-      color: #6b4000; /* deep brown-gold like the logo frame */
+      color: #6b4000;
     }
 
-    /* Keep header title white on the orange bar */
-    header h1 {
-      color: #ffffff;
-      font-family: "Tiro Devanagari Sanskrit", serif;
-      font-weight: 900;
-    }
+    header h1 { color: #ffffff; font-family: "Tiro Devanagari Sanskrit", serif; font-weight: 900; }
 
     /* Global Variables */
     :root{ 
       --bg:#0b0b0e;
-      --card:#bebfc2; 
+      --card:#af7408;
       --accent:#ff7a00; 
-      --text:#ffffff; 
+      --text:#d6bc29; 
     }
     *{ box-sizing:border-box; }
 
+    html, body { height: 100%; max-width: 100%; overflow-x: hidden; }
     body{
       margin:0;
-      color: #1c1c1c; /* Normal Text */
+      color:#1c1c1c;
       font: 16px/1.6 "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 
       /* Warm Taj-India inspired gradient background */
-      background-color: #f9f6ef;
+      background-color: #ccbe7f;
       background-image:
         radial-gradient(circle at top left, rgba(255,122,0,0.16), transparent 60%),
-        radial-gradient(circle at bottom right, rgba(19,136,8,0.16), transparent 60%),
-
+        radial-gradient(circle at bottom right, rgba(19,136,8,0.16), transparent 60%);
     }
-      .content { color: #ffffff; }
-    /* Top orange title bar */
-    header{ position:sticky; top:0; z-index:10; background:var(--accent);
-            padding:18px 20px; box-shadow:0 6px 18px rgba(0,0,0,.25); 
-            text-align: center;
-        }
-    header h1{ margin:0; font-size:clamp(22px,3vw,30px); letter-spacing:.3px; }
 
-    /* Main container */
+    /* Top orange title bar */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--accent);
+      padding: 10px 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      text-align: center;
+      border-bottom: 3px solid #cfa24a;
+      animation: goldPulse 3.2s ease-in-out infinite;
+    }
+    header::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.25) 0%, transparent 70%);
+      animation: headerGlow 4s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+    @keyframes headerGlow {
+      0% { opacity: 0.4; transform: scale(1.0); }
+      100% { opacity: 0.8; transform: scale(1.2); }
+    }
+    @keyframes goldPulse { 
+      0%,100% { text-shadow: 0 0 4px rgba(207,162,74,.55), 0 0 10px rgba(207,162,74,.35); }
+      50%     { text-shadow: 0 0 6px rgba(207,162,74,.75), 0 0 14px rgba(207,162,74,.45); }
+    }
+    header h1 {
+      margin: 0;
+      font-size: clamp(22px, 2.8vw, 28px);
+      letter-spacing: .5px;
+      color: #fff;
+      font-weight: 900;
+    }
+
+    /* Main container + sticky footer layout */
+    body { min-height: 100vh; display: flex; flex-direction: column; }
+    main { flex: 1; }
+
     .container{ max-width:900px; margin:0 auto; padding:24px 20px; }
 
     /* Timeline layout */
@@ -61,16 +140,26 @@
       flex:1; background:var(--card); padding:20px; border-radius:12px;
       box-shadow:0 4px 16px rgba(0,0,0,.3);
       display:flex; align-items:center; gap:18px;
-      border:1px solid rgba(207,162,74,.18); /* subtle gold edge */
+      border:1px solid rgba(207,162,74,.18);
     }
-
     .content img{
       width:220px; height:150px; object-fit:cover; border-radius:12px; flex-shrink:0;
-      border:1px solid rgba(207,162,74,.35); /* thin gold ring */
+      border:1px solid rgba(207,162,74,.35);
       box-shadow:0 6px 20px rgba(0,0,0,.35);
     }
     .text-block{ flex:1; }
-    .text-block h2{ margin:0 0 6px 0; font-size:18px; font-weight:700; }
+    .text-block h2 {
+      margin: 0 0 6px 0;
+      font-size: 20px;
+      font-weight: 700;
+      font-family: "Tiro Devanagari Sanskrit", serif;
+      color: #145a32;
+      text-shadow:
+        -1px -1px 0 #cfa24a,
+         1px -1px 0 #cfa24a,
+        -1px  1px 0 #cfa24a,
+         1px  1px 0 #cfa24a;
+    }
 
     /* Fade-in animation */
     .reveal{ opacity:0; transform:translateY(16px);
@@ -84,103 +173,217 @@
       .content img{ width:100%; height:auto; }
     }
 
+    /* --- Dot rail --- */
+    .timeline-nav { margin-top:24px; }
+    .timeline-nav .rail{
+      position:relative;
+      display:flex; justify-content:space-between; align-items:center;
+      padding:18px 6px;
+      background: linear-gradient(0deg, rgba(255,122,0,.12), rgba(255,122,0,.12));
+      border:1px solid rgba(255,122,0,.25);
+      border-radius:999px;
+    }
+    .timeline-nav .rail::before{
+      content:""; position:absolute; left:24px; right:24px; top:50%;
+      height:2px; background:rgba(255,122,0,.45); transform:translateY(-50%);
+    }
 
+    .dot{
+      position:relative;
+      width:18px; height:18px; border-radius:50%;
+      background:#ffd813; border:2px solid #fff;
+      box-shadow:0 0 0 2px rgba(255,122,0,.35);
+      cursor:pointer;
+      transition: transform .15s ease, box-shadow .2s ease;
+    }
+    .dot:hover{ transform:scale(1.08); box-shadow:0 0 0 4px rgba(255,122,0,.28); }
+    .dot.active{ background:#cfa24a; box-shadow:0 0 0 4px rgba(207,162,74,.35); }
+    .dot::after{
+      content: attr(data-label);
+      position:absolute; left:50%; top:-34px; transform:translateX(-50%);
+      background:#14161a; color:#fff; padding:4px 8px; border-radius:8px;
+      font-size:12px; white-space:nowrap; opacity:0; pointer-events:none;
+      border:1px solid rgba(255,255,255,.12);
+      transition: opacity .15s ease, transform .15s ease;
+    }
+    .dot:hover::after{ opacity:1; transform:translateX(-50%) translateY(-2px); }
 
-        /* ===== Intro Overlay ===== */
+    /* Viewer */
+    #viewer{ margin-top:28px; }
+    .viewer-date{
+      color:#ff7a00; font-weight:900; font-size:20px; margin:0 0 10px 4px;
+      font-family:"Tiro Devanagari Sanskrit", serif;
+    }
+    .viewer-card{ 
+      position:relative; 
+      overflow:hidden;
+      background: linear-gradient(145deg, #a98e16 0%, #c5b119 100%);
+      border: 1px solid rgba(207,162,74,0.25); /* fixed rbga -> rgba */
+      border-radius: 12px;
+      display:flex; align-items:center; gap:18px; padding:20px;
+    }
+    .viewer-card.fade-out{ opacity:0; transform:translateY(8px); transition:opacity .25s ease, transform .25s ease; }
+    .viewer-card.fade-in{ opacity:1; transform:none; transition:opacity .35s ease, transform .35s ease; }
+
+    .viewer-img{
+      width:220px; height:150px; object-fit:contain;
+      border-radius:12px; border:1px solid rgba(207,162,74,.35);
+      box-shadow:0 6px 20px rgba(0,0,0,.35); flex-shrink:0; margin-right:18px;
+    }
+    @media (max-width:640px){
+      .viewer-img{ width:100%; height:auto; margin-right:0; }
+      .viewer-card{ flex-direction: column; }
+    }
+
+    .viewer-img,
+    .content img{
+      width: 220px;
+      height: 150px;   /* fixed frame */
+      object-fit: cover;  /* fills, will crop if ratios differ */
+    }
+    /* ===== Intro Overlay ===== */
     #intro{
-      position: fixed;
-      inset: 0;
-      z-index: 9999;             /* sits above everything */
+      position: fixed; inset: 0; z-index: 9999;
       background: radial-gradient(1200px 800px at 50% 50%, #101218 0%, #0b0b0e 60%, #06070a 100%);
-      display: grid;
-      place-items: center;
-      overflow: hidden;
+      display: grid; place-items: center; overflow: hidden;
       transition: opacity .7s ease, transform .7s ease;
     }
-    #intro.hide{
-      opacity: 0;
-      transform: scale(1.03);    /* tiny “whoosh” as it fades */
-      pointer-events: none;
-    }
-
-    /* Centered title text */
-    #intro .intro-content{
-      position: relative;
-      text-align: center;
-      color: var(--text);
-      padding: 24px 28px;
-      z-index: 2;
-    }
-    #intro .intro-content h1{
-      margin: 0 0 10px 0;
-      font-size: clamp(28px, 6vw, 56px);
-      font-weight: 900;
-      letter-spacing: .5px;
-    }
-    #intro .byline{
-      margin: 0;
-      opacity: .85;
-      font-size: clamp(14px, 2.5vw, 18px);
-    }
-    #intro .hint{
-      margin-top: 12px;
-      opacity: .6;
-      font-size: 14px;
-    }
-
-    /* Animated sparkles layer */
+    #intro.hide{ opacity: 0; transform: scale(1.03); pointer-events: none; }
+    #intro .intro-content{ position: relative; text-align: center; color: var(--text); padding: 24px 28px; z-index: 2; }
+    #intro .intro-content h1{ margin: 0 0 10px 0; font-size: clamp(28px, 6vw, 56px); font-weight: 900; letter-spacing: .5px; }
+    #intro .byline{ margin: 0; opacity: .85; font-size: clamp(14px, 2.5vw, 18px); }
+    #intro .hint{ margin-top: 12px; opacity: .6; font-size: 14px; }
     #intro .intro-bg{
-      position: absolute;
-      inset: 0;
-      z-index: 1;
+      position: absolute; inset: 0; z-index: 1;
       background:
-        radial-gradient(3.0px 3.0px at 20% 30%, rgba(255,255,255,.45) 0 40%, transparent 41%) repeat,
-        radial-gradient(3.0px 3.0px at 70% 60%, rgba(255,255,255,.38) 0 40%, transparent 41%) repeat,
+        radial-gradient(3px 3px at 20% 30%, rgba(255,255,255,.45) 0 40%, transparent 41%) repeat,
+        radial-gradient(3px 3px at 70% 60%, rgba(255,255,255,.38) 0 40%, transparent 41%) repeat,
         radial-gradient(2.5px 2.5px at 40% 80%, rgba(255,255,255,.35) 0 40%, transparent 41%) repeat,
         radial-gradient(2.5px 2.5px at 85% 20%, rgba(255,255,255,.42) 0 40%, transparent 41%) repeat;
       background-size: 300px 300px, 380px 380px, 260px 260px, 420px 420px;
       animation: drift1 16s linear infinite, drift2 28s linear infinite reverse;
-      filter: drop-shadow(0 0 2px rgba(255,255,255,.25));
-      opacity: .99;
       filter: drop-shadow(0 0 3px rgba(255,255,255,.4));
+      opacity: .99;
     }
-
-    /* subtle drifting to make sparkles move */
     @keyframes drift1{
       0%   { background-position: 0 0, 0 0, 0 0, 0 0; }
       100% { background-position: 300px 240px, -280px -210px, 220px -200px, -300px 260px; }
     }
-    @keyframes drift2{
-      0%   { transform: scale(1); }
-      100% { transform: scale(1.04); }
+    @keyframes drift2{ 0% { transform: scale(1); } 100% { transform: scale(1.04); } }
+
+    /* Keep the long list hidden since you’re using the viewer */
+    .timeline { display:none; }
+
+    /* Decorative frame strip above footer */
+    .decor-frame {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 90px;
+      background-repeat: repeat-x;
+      background-size: contain;
+      opacity: 0.9;
+      filter: brightness(1.1) sepia(1) hue-rotate(15deg) saturate(3) drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+      pointer-events: none;
+      z-index: 0; /* behind content */
+      animation: shimmer 6s ease-in-out infinite;
+    }
+    .decor-frame.bottom {
+      bottom: 70px; /* sits just above footer */
+      background-image: url("images/frame-bottom.png");
+      transform: rotate(180deg);
+    }
+    @keyframes shimmer {
+      0%,100% { filter: drop-shadow(0 3px 5px rgba(0,0,0,0.25)) brightness(1); }
+      50% { filter: drop-shadow(0 3px 5px rgba(0,0,0,0.25)) brightness(1.2); }
     }
 
+    /* Particles layer (under content, above bg) */
+    #particles{
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: .9;
+    }
 
+    /* Diya */
+    .diyaa{
+      position: fixed; right: 16px; bottom: 14px; z-index: 2;
+      font-size: 24px; filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));
+      animation: diya-flicker 1.3s ease-in-out infinite;
+      user-select: none; pointer-events: none;
+    }
+    @keyframes diya-flicker{
+      0%,100% { transform: translateY(0);   opacity: .85; }
+      50%     { transform: translateY(-1px); opacity: 1;  }
+    }
+
+    /* Footer */
+    footer{
+      position: relative;
+      width: 100%;
+      background: linear-gradient(90deg, #146b3a, #0e4a27);
+      color:#fffdf5;
+      text-align:center;
+      padding: 12px 0;
+      border-top: 3px solid #cfa24a;
+      font: 14px/1.3 "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      z-index: 2;
+    }
+    footer p{ margin:0; }
   </style>
 </head>
 
 <body>
   <!-- Intro Overlay -->
-<div id="intro">
-  <div class="intro-bg"></div>
-  <div class="intro-content">
-    <h1>Taj India Timeline Project</h1>
-    <p class="byline">By Ethan Tran, Elijah Steele, Nyla Ahmed, Rahazia Young, Harish Thirunavu</p>
-    <p class="hint">==========================</p>
+  <div id="intro" aria-hidden="true">
+    <div class="intro-bg"></div>
+    <div class="intro-content">
+      <h1>Taj India Timeline Project</h1>
+      <p class="byline">By Ethan Tran, Elijah Steele, Nyla Ahmed, Rahazia Young, Harish Thirunavu</p>
+      <p class="hint">==========================</p>
+    </div>
   </div>
-</div>
+
   <header>
     <h1>Taj India Timeline (1986–Present)</h1>
   </header>
 
   <main class="container">
-    <section class="timeline">
+    <!-- Dot navigation -->
+    <section class="timeline-nav" aria-label="Timeline navigation">
+      <div class="rail">
+        <button class="dot" data-key="1986"  aria-label="1986"  data-label="1986"></button>
+        <button class="dot" data-key="1994"  aria-label="July 20, 1994" data-label="July 20, 1994"></button>
+        <button class="dot" data-key="2012"  aria-label="Nov 14, 2012" data-label="Nov 14, 2012"></button>
+        <button class="dot" data-key="2019"  aria-label="Summer 2019" data-label="Summer 2019"></button>
+        <button class="dot" data-key="2020covid" aria-label="Mar 13, 2020" data-label="Mar 13, 2020"></button>
+        <button class="dot" data-key="2020lease" aria-label="Jun 21, 2020" data-label="Jun 21, 2020"></button>
+        <button class="dot" data-key="2023redev" aria-label="Jul 5, 2023" data-label="Jul 5, 2023"></button>
+        <button class="dot" data-key="2023relocate" aria-label="Summer 2023" data-label="Summer 2023"></button>
+        <button class="dot" data-key="2023demo" aria-label="Nov 2023" data-label="Nov 2023"></button>
+        <button class="dot" data-key="2025award" aria-label="Oct 2025" data-label="Oct 2025"></button>
+      </div>
+    </section>
 
-      <!-- 1) 1986 -->
+    <!-- Single viewer card -->
+    <section id="viewer" aria-live="polite">
+      <div class="viewer-date"></div>
+      <div class="viewer-card">
+        <img class="viewer-img" src="images/test1.png" alt="Timeline image" />
+        <div class="text-block">
+          <h2 class="viewer-title">Select a date above</h2>
+          <p class="viewer-desc">Click any dot to load that moment in the Taj India story.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hidden full timeline list (kept for content loading) -->
+    <section class="timeline" aria-hidden="true">
       <div class="event">
         <div class="date">1986</div>
         <div class="content" data-desc="./dates/1986.txt">
-          <!-- Optional image slot -->
           <img src="images/test1.png" alt="Taj India logo icon">
           <div class="text-block">
             <h2>Royal Taj opens, introducing Indian cuisine to Birmingham</h2>
@@ -188,8 +391,6 @@
           </div>
         </div>
       </div>
-
-      <!-- 2) July 20, 1994 -->
       <div class="event">
         <div class="date">July 20, 1994</div>
         <div class="content" data-desc="./dates/1994.txt">
@@ -199,8 +400,6 @@
           </div>
         </div>
       </div>
-
-      <!-- 3) November 14, 2012 -->
       <div class="event">
         <div class="date">November 14, 2012</div>
         <div class="content" data-desc="./dates/2012.txt">
@@ -210,8 +409,6 @@
           </div>
         </div>
       </div>
-
-      <!-- 4) Summer 2019 -->
       <div class="event">
         <div class="date">Summer 2019</div>
         <div class="content" data-desc="./dates/2019.txt">
@@ -221,8 +418,6 @@
           </div>
         </div>
       </div>
-
-      <!-- 5) March 13, 2020 -->
       <div class="event">
         <div class="date">March 13, 2020</div>
         <div class="content" data-desc="./dates/2020-covid.txt">
@@ -232,8 +427,6 @@
           </div>
         </div>
       </div>
-
-      <!-- 6) June 21, 2020 -->
       <div class="event">
         <div class="date">June 21, 2020</div>
         <div class="content" data-desc="./dates/2020-lease.txt">
@@ -243,8 +436,6 @@
           </div>
         </div>
       </div>
-
-      <!-- 7) July 5, 2023 -->
       <div class="event">
         <div class="date">July 5, 2023</div>
         <div class="content" data-desc="./dates/2023-redev.txt">
@@ -254,8 +445,6 @@
           </div>
         </div>
       </div>
-
-      <!-- 8) Summer 2023 -->
       <div class="event">
         <div class="date">Summer 2023</div>
         <div class="content" data-desc="./dates/2023-relocate.txt">
@@ -265,8 +454,6 @@
           </div>
         </div>
       </div>
-
-      <!-- 9) November 2023 -->
       <div class="event">
         <div class="date">November 2023</div>
         <div class="content" data-desc="./dates/2023-demo.txt">
@@ -276,8 +463,6 @@
           </div>
         </div>
       </div>
-
-      <!-- 10) October 2025 -->
       <div class="event">
         <div class="date">October 2025</div>
         <div class="content" data-desc="./dates/2025-award.txt">
@@ -287,9 +472,26 @@
           </div>
         </div>
       </div>
-
     </section>
   </main>
+
+  <!-- Decorative frame just above footer -->
+  <div class="decor-frame bottom" aria-hidden="true"></div>
+
+  <!-- Single pair of steam wisps (avoid duplicates) -->
+  <div class="steam left" aria-hidden="true"></div>
+  <div class="steam right" aria-hidden="true"></div>
+
+  <!-- Diya -->
+  <div class="diyaa" aria-hidden="true">🪔</div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Taj India Timeline Project</p>
+  </footer>
+
+  <!-- Particles canvas (present BEFORE the script runs) -->
+  <canvas id="particles" aria-hidden="true"></canvas>
 
   <script>
     // Fade in when entering view; reset when leaving
@@ -305,7 +507,7 @@
       observer.observe(el);
     });
 
-    // Load descriptions from /dates/*.txt into each .content that has data-desc
+    // Load descriptions for hidden timeline cards (source-of-truth for text)
     document.querySelectorAll('.content[data-desc]').forEach(async (card) => {
       const target = card.querySelector('.desc');
       if (!target) return;
@@ -320,20 +522,145 @@
       }
     });
 
-    
-
-        // Intro overlay: click anywhere to hide
+    // Intro overlay: click anywhere to hide (and keyboard accessible)
     (function(){
       const intro = document.getElementById('intro');
       if(!intro) return;
       const dismiss = () => intro.classList.add('hide');
       intro.addEventListener('click', dismiss);
-      // Accessibility: also allow Enter/Space
       intro.tabIndex = 0;
       intro.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') dismiss();
       });
     })();
+
+    // Map dot keys -> files (txt) + image paths + titles + pretty date
+    const TIMELINE_MAP = {
+      "1986":       { date:"1986",              title:"Royal Taj opens, introducing Indian cuisine to Birmingham",
+                      txt:"./dates/1986.txt",   img:"images/test1.png" },
+      "1994":       { date:"July 20, 1994",     title:"Taj India opens on Highland Ave with $5.95 buffet",
+                      txt:"./dates/1994.txt",   img:"images/1994-opening.jpg" },
+      "2012":       { date:"November 14, 2012", title:"First Holi Facebook post builds digital connection",
+                      txt:"./dates/2012.txt",   img:"images/2012-holi.jpg" },
+      "2019":       { date:"Summer 2019",       title:"25th Anniversary and reflections on Highland Plaza’s future",
+                      txt:"./dates/2019.txt",   img:"images/2019-25th.jpg" },
+      "2020covid":  { date:"March 13, 2020",    title:"COVID safety post highlights health and community care",
+                      txt:"./dates/2020-covid.txt", img:"images/2020-covid.jpg" },
+      "2020lease":  { date:"June 21, 2020",     title:"Lease extension confirms stability during uncertainty",
+                      txt:"./dates/2020-lease.txt", img:"images/2020-lease.jpg" },
+      "2023redev":  { date:"July 5, 2023",      title:"Redevelopment forces relocation decision",
+                      txt:"./dates/2023-redev.txt", img:"images/2023-redev.jpg" },
+      "2023relocate":{date:"Summer 2023",       title:"Relocation to historic Fire Station No. 22 begins",
+                      txt:"./dates/2023-relocate.txt", img:"images/2023-relocate.jpg" },
+      "2023demo":   { date:"November 2023",     title:"Demolition of Highland Plaza marks end of an era",
+                      txt:"./dates/2023-demo.txt", img:"images/2023-demo.jpg" },
+      "2025award":  { date:"October 2025",      title:"National recognition — Taj India named Alabama’s top Indian restaurant",
+                      txt:"./dates/2025-award.txt", img:"images/2025-award.jpg" },
+    };
+
+    const dots = document.querySelectorAll('.timeline-nav .dot');
+    const card = document.querySelector('.viewer-card');
+    const elDate = document.querySelector('.viewer-date');
+    const elTitle = document.querySelector('.viewer-title');
+    const elDesc = document.querySelector('.viewer-desc');
+    const elImg  = document.querySelector('.viewer-img');
+
+    function setActive(dot){
+      dots.forEach(d => d.classList.remove('active'));
+      dot.classList.add('active');
+    }
+
+    async function loadEntry(key){
+      const cfg = TIMELINE_MAP[key]; if(!cfg) return;
+      card.classList.remove('fade-in');
+      card.classList.add('fade-out');
+
+      try {
+        const res = await fetch(cfg.txt, { cache:'no-store' });
+        const text = res.ok ? (await res.text()).trim() : '(Description unavailable)';
+        setTimeout(() => {
+          elDate.textContent = cfg.date;
+          elTitle.textContent = cfg.title;
+          elDesc.textContent = text || '(Description unavailable)';
+          elImg.src = cfg.img || 'images/test1.png';
+          elImg.alt = cfg.title;
+
+          card.classList.remove('fade-out');
+          void card.offsetWidth;
+          card.classList.add('fade-in');
+        }, 260);
+      } catch(e){
+        setTimeout(() => {
+          elDate.textContent = cfg.date;
+          elTitle.textContent = cfg.title;
+          elDesc.textContent = '(Description unavailable)';
+          card.classList.remove('fade-out');
+          card.classList.add('fade-in');
+        }, 260);
+      }
+    }
+
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        setActive(dot);
+        loadEntry(dot.dataset.key);
+      });
+    });
+
+    // Auto-select the first point
+    const first = document.querySelector('.timeline-nav .dot');
+    if(first){ first.click(); }
+
+    // Particles — ensure canvas exists before using it
+    document.addEventListener('DOMContentLoaded', () => {
+      const canvas = document.getElementById("particles");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      let particles = [];
+      const particleCount = 60;
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      window.addEventListener("resize", resizeCanvas);
+      resizeCanvas();
+
+      function createParticle() {
+        const side = Math.random() > 0.5 ? 'left' : 'right';
+        const x = side === 'left'
+          ? Math.random() * 200
+          : canvas.width - Math.random() * 200;
+        const y = canvas.height + 20;
+        const size = Math.random() * 4 + 2;
+        const speedY = Math.random() * 0.5 + 0.2;
+        const opacity = Math.random() * 0.5 + 0.5;
+        return { x, y, size, speedY, opacity };
+      }
+
+      function drawParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let p of particles) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 204, 102, ${p.opacity})`;
+          ctx.fill();
+          p.y -= p.speedY;
+          p.x += Math.sin(p.y * 0.02) * 0.3;
+          p.opacity -= 0.0015;
+        }
+        particles = particles.filter(p => p.opacity > 0);
+      }
+
+      function loop() {
+        if (particles.length < particleCount) {
+          particles.push(createParticle());
+        }
+        drawParticles();
+        requestAnimationFrame(loop);
+      }
+      loop();
+    });
   </script>
 </body>
 </html>
