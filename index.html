@@ -432,7 +432,7 @@
     <section id="viewer" aria-live="polite">
       <div class="viewer-date"></div>
       <div class="viewer-card">
-        <img class="viewer-img" src="images/test1.png" alt="Timeline image" />
+        <img class="viewer-img" src="images/test1.jpg" alt="Timeline image" />
         <div class="text-block">
           <h2 class="viewer-title">Select a date above</h2>
           <p class="viewer-desc">Click any dot to load that moment in the Taj India story.</p>
@@ -445,7 +445,7 @@
       <div class="event">
         <div class="date">1986</div>
         <div class="content" data-desc="./dates/1986.txt">
-          <img src="images/test1.png" alt="Taj India logo icon">
+          <img src="images/test1.jpg" alt="Taj India logo icon">
           <div class="text-block">
             <h2>Royal Taj opens, introducing Indian cuisine to Birmingham</h2>
             <p class="desc"></p>
@@ -598,13 +598,13 @@
     // Map dot keys -> files (txt) + image paths + titles + pretty date
     const TIMELINE_MAP = {
       "1986":       { date:"1986",              title:"Royal Taj opens, introducing Indian cuisine to Birmingham",
-                      txt:"./dates/1986.txt",   img:"images/test1.png" },
+                      txt:"./dates/1986.txt",   img:"images/test1.jpg" },
       "1994":       { date:"July 20, 1994",     title:"Taj India opens on Highland Ave with $5.95 buffet",
                       txt:"./dates/1994.txt",   img:"images/building.jpg" },
       "2012":       { date:"November 14, 2012", title:"First Holi Facebook post builds digital connection",
-                      txt:"./dates/2012.txt",   img:"images/community.jpg" },
+                      txt:"./dates/2012.txt",   img:"images/community.png" },
       "2019":       { date:"Summer 2019",       title:"25th Anniversary and reflections on Highland Plaza’s future",
-                      txt:"./dates/2019.txt",   img:"images/years.jpg" },
+                      txt:"./dates/2019.txt",   img:"images/years (2).png" },
       "2020covid":  { date:"March 13, 2020",    title:"COVID safety post highlights health and community care",
                       txt:"./dates/2020-covid.txt", img:"images/covid.png" },
       "2020lease":  { date:"June 21, 2020",     title:"Lease extension confirms stability during uncertainty",
@@ -612,9 +612,9 @@
       "2023redev":  { date:"July 5, 2023",      title:"Redevelopment forces relocation decision",
                       txt:"./dates/2023-redev.txt", img:"images/staff.jpg" },
       "2023relocate":{date:"Summer 2023",       title:"Relocation to historic Fire Station No. 22 begins",
-                      txt:"./dates/2023-relocate.txt", img:"images/menu.png" },
+                      txt:"./dates/2023-relocate.txt", img:"images/fire.png" },
       "2023demo":   { date:"November 2023",     title:"Demolition of Highland Plaza marks end of an era",
-                      txt:"./dates/2023-demo.txt", img:"images/chefs.jpg" },
+                      txt:"./dates/2023-demo.txt", img:"images/demo.jpg" },
       "2025award":  { date:"October 2025",      title:"National recognition — Taj India named Alabama’s top Indian restaurant",
                       txt:"./dates/2025-award.txt", img:"images/award.jpg" },
     };
@@ -643,7 +643,7 @@
           elDate.textContent = cfg.date;
           elTitle.textContent = cfg.title;
           elDesc.textContent = text || '(Description unavailable)';
-          elImg.src = cfg.img || 'images/test1.png';
+          elImg.src = cfg.img || 'images/test1.jpg';
           elImg.alt = cfg.title;
 
           card.classList.remove('fade-out');
