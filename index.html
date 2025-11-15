@@ -130,7 +130,7 @@
     body { min-height: 100vh; display: flex; flex-direction: column; }
     main { flex: 1; }
 
-    .container{ max-width:900px; margin:0 auto; padding:24px 20px; }
+    .container{ max-width:1100px; margin:0 auto; padding:24px 20px; }
 
     /* Timeline layout */
     .timeline{ margin-top:60px; position:relative; }
@@ -285,7 +285,7 @@
       opacity: 0.9;
       filter: brightness(1.1) sepia(1) hue-rotate(15deg) saturate(3) drop-shadow(0 2px 4px rgba(0,0,0,0.3));
       pointer-events: none;
-      z-index: 0; /* behind content */
+      z-index: -1; /* behind content */
       animation: shimmer 6s ease-in-out infinite;
     }
     .decor-frame.bottom {
@@ -332,6 +332,67 @@
       z-index: 2;
     }
     footer p{ margin:0; }
+
+    /* === ENLARGE VIEWER CARD === */
+    .viewer-card {
+      padding: 32px;
+      border-radius: 18px;
+      gap: 28px;
+      transform: scale(1.02);
+    }
+
+    /* === BIGGER IMAGE === */
+    .viewer-img {
+      width: auto;
+      height: auto;
+      max-height: 240px;
+      object-fit: contain;
+      border-radius: 16px;
+      padding: 10px;
+      background: rgba(255,255,255,0.6);
+    }
+
+    /* === BIGGER TEXT BLOCK === */
+    .viewer-title {
+      font-size: 26px !important;
+      line-height: 1.3;
+    }
+
+    .viewer-desc {
+      font-size: 18px !important;
+      line-height: 1.55;
+      margin-top: 8px;
+      max-width: 650px;
+    }
+
+    /* === DATE SIZE BOOST === */
+    .viewer-date {
+      font-size: 24px !important;
+      margin-left: 4px;
+    }
+
+    /* === MOBILE IMPROVEMENTS === */
+    @media (max-width: 640px) {
+      .viewer-card {
+        flex-direction: column;
+        padding: 28px;
+        gap: 22px;
+      }
+
+      .viewer-img {
+        width: 100%;
+        max-height: 240px;
+      }
+
+      .viewer-title {
+        font-size: 24px !important;
+      }
+      
+      .viewer-desc {
+        font-size: 17px !important;
+      }
+    }
+
   </style>
 </head>
 
@@ -539,23 +600,23 @@
       "1986":       { date:"1986",              title:"Royal Taj opens, introducing Indian cuisine to Birmingham",
                       txt:"./dates/1986.txt",   img:"images/test1.png" },
       "1994":       { date:"July 20, 1994",     title:"Taj India opens on Highland Ave with $5.95 buffet",
-                      txt:"./dates/1994.txt",   img:"images/1994-opening.jpg" },
+                      txt:"./dates/1994.txt",   img:"images/building.jpg" },
       "2012":       { date:"November 14, 2012", title:"First Holi Facebook post builds digital connection",
-                      txt:"./dates/2012.txt",   img:"images/2012-holi.jpg" },
+                      txt:"./dates/2012.txt",   img:"images/community.jpg" },
       "2019":       { date:"Summer 2019",       title:"25th Anniversary and reflections on Highland Plaza’s future",
-                      txt:"./dates/2019.txt",   img:"images/2019-25th.jpg" },
+                      txt:"./dates/2019.txt",   img:"images/years.jpg" },
       "2020covid":  { date:"March 13, 2020",    title:"COVID safety post highlights health and community care",
-                      txt:"./dates/2020-covid.txt", img:"images/2020-covid.jpg" },
+                      txt:"./dates/2020-covid.txt", img:"images/covid.png" },
       "2020lease":  { date:"June 21, 2020",     title:"Lease extension confirms stability during uncertainty",
-                      txt:"./dates/2020-lease.txt", img:"images/2020-lease.jpg" },
+                      txt:"./dates/2020-lease.txt", img:"images/indoors.png" },
       "2023redev":  { date:"July 5, 2023",      title:"Redevelopment forces relocation decision",
-                      txt:"./dates/2023-redev.txt", img:"images/2023-redev.jpg" },
+                      txt:"./dates/2023-redev.txt", img:"images/staff.jpg" },
       "2023relocate":{date:"Summer 2023",       title:"Relocation to historic Fire Station No. 22 begins",
-                      txt:"./dates/2023-relocate.txt", img:"images/2023-relocate.jpg" },
+                      txt:"./dates/2023-relocate.txt", img:"images/menu.png" },
       "2023demo":   { date:"November 2023",     title:"Demolition of Highland Plaza marks end of an era",
-                      txt:"./dates/2023-demo.txt", img:"images/2023-demo.jpg" },
+                      txt:"./dates/2023-demo.txt", img:"images/chefs.jpg" },
       "2025award":  { date:"October 2025",      title:"National recognition — Taj India named Alabama’s top Indian restaurant",
-                      txt:"./dates/2025-award.txt", img:"images/2025-award.jpg" },
+                      txt:"./dates/2025-award.txt", img:"images/award.jpg" },
     };
 
     const dots = document.querySelectorAll('.timeline-nav .dot');
