@@ -130,12 +130,16 @@
     body { min-height: 100vh; display: flex; flex-direction: column; }
     main { flex: 1; }
 
-    .container{ max-width:1100px; margin:0 auto; padding:24px 20px; }
+    .container{ 
+      max-width:2000px; 
+      margin:0 auto; 
+      padding:24px 20px; 
+    }
 
     /* Timeline layout */
     .timeline{ margin-top:60px; position:relative; }
     .event{ display:flex; align-items:flex-start; margin-bottom:80px; gap:24px; }
-    .date{ flex:0 0 130px; font-weight:900; font-size:33px; color:var(--accent); }
+    .date{ flex:0 0 130px; font-weight:900; font-size:40px; color:var(--accent); }
     .content{
       flex:1; background:var(--card); padding:20px; border-radius:12px;
       box-shadow:0 4px 16px rgba(0,0,0,.3);
@@ -218,9 +222,13 @@
       position:relative; 
       overflow:hidden;
       background: linear-gradient(145deg, #a98e16 0%, #c5b119 100%);
-      border: 1px solid rgba(207,162,74,0.25); /* fixed rbga -> rgba */
+      border: 1px solid rgba(207,162,74,0.25);
       border-radius: 12px;
-      display:flex; align-items:center; gap:18px; padding:20px;
+      display:flex;
+      align-items:center;
+      gap:18px;
+      padding:20px;
+      width: 100%;          /* make it stretch across the container */
     }
     .viewer-card.fade-out{ opacity:0; transform:translateY(8px); transition:opacity .25s ease, transform .25s ease; }
     .viewer-card.fade-in{ opacity:1; transform:none; transition:opacity .35s ease, transform .35s ease; }
@@ -335,8 +343,8 @@
 
     /* === ENLARGE VIEWER CARD === */
     .viewer-card {
-      padding: 32px;
-      border-radius: 18px;
+      padding: 38px;
+      border-radius: 20px;
       gap: 28px;
       transform: scale(1.02);
     }
@@ -347,27 +355,27 @@
       height: auto;
       max-height: 240px;
       object-fit: contain;
-      border-radius: 16px;
-      padding: 10px;
+      border-radius: 18px;
+      padding: 12px;
       background: rgba(255,255,255,0.6);
     }
 
     /* === BIGGER TEXT BLOCK === */
     .viewer-title {
-      font-size: 26px !important;
+      font-size: 24px !important;
       line-height: 1.3;
     }
 
     .viewer-desc {
-      font-size: 18px !important;
+      font-size: 21px !important;
       line-height: 1.55;
       margin-top: 8px;
-      max-width: 650px;
+      max-width: 800px;
     }
 
     /* === DATE SIZE BOOST === */
     .viewer-date {
-      font-size: 24px !important;
+      font-size: 28px !important;
       margin-left: 4px;
     }
 
@@ -393,6 +401,131 @@
       }
     }
 
+
+    /* --- viewer media / slider --- */
+    .viewer-media {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .viewer-img {
+      display: block;
+    }
+
+    /* arrow buttons */
+    .viewer-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.45);
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      padding: 0;
+    }
+
+    .viewer-nav-prev { left: 6px; }
+    .viewer-nav-next { right: 6px; }
+
+    @media (max-width: 640px) {
+      .viewer-media {
+        width: 100%;
+      }
+    }
+
+    /* === Lightbox (expanded image) === */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      display: none;          /* shown via .show */
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .lightbox.show {
+      display: flex;
+    }
+
+    .lightbox-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+    }
+
+    .lightbox-content {
+      position: relative;
+      z-index: 1;
+      max-width: min(800px, 80vw);  /* was 90vw */
+      max-height: 70vh;             /* was 90vh */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox-img {
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 18px;
+      background: #fff;
+      padding: 8px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.7);
+    }
+
+    /* close button */
+    .lightbox-close {
+      position: absolute;
+      top: -32px;
+      right: -32px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: #fff;
+      color: #333;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    /* nav arrows inside lightbox */
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      font-size: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .lightbox-prev { left: -50px; }
+    .lightbox-next { right: -50px; }
+
+    @media (max-width: 640px) {
+      .lightbox-prev { left: 8px; }
+      .lightbox-next { right: 8px; }
+      .lightbox-close {
+        top: 8px;
+        right: 8px;
+      }
+    }
   </style>
 </head>
 
@@ -415,16 +548,16 @@
     <!-- Dot navigation -->
     <section class="timeline-nav" aria-label="Timeline navigation">
       <div class="rail">
-        <button class="dot" data-key="1986"  aria-label="1986"  data-label="1986"></button>
-        <button class="dot" data-key="1994"  aria-label="July 20, 1994" data-label="July 20, 1994"></button>
-        <button class="dot" data-key="2012"  aria-label="Nov 14, 2012" data-label="Nov 14, 2012"></button>
-        <button class="dot" data-key="2019"  aria-label="Summer 2019" data-label="Summer 2019"></button>
-        <button class="dot" data-key="2020covid" aria-label="Mar 13, 2020" data-label="Mar 13, 2020"></button>
-        <button class="dot" data-key="2020lease" aria-label="Jun 21, 2020" data-label="Jun 21, 2020"></button>
-        <button class="dot" data-key="2023redev" aria-label="Jul 5, 2023" data-label="Jul 5, 2023"></button>
-        <button class="dot" data-key="2023relocate" aria-label="Summer 2023" data-label="Summer 2023"></button>
-        <button class="dot" data-key="2023demo" aria-label="Nov 2023" data-label="Nov 2023"></button>
-        <button class="dot" data-key="2025award" aria-label="Oct 2025" data-label="Oct 2025"></button>
+        <button class="dot" data-key="1986"          aria-label="1986"               data-label="1986"></button>
+        <button class="dot" data-key="1990s-2000s"   aria-label="Late 1990s–2000s"   data-label="Late 1990s–2000s"></button>
+        <button class="dot" data-key="1994"          aria-label="July 20, 1994"      data-label="July 20, 1994"></button>
+        <button class="dot" data-key="2003"          aria-label="Jan 23, 2003"       data-label="Jan 23, 2003"></button>
+        <button class="dot" data-key="2012"          aria-label="Nov 14, 2012"       data-label="Nov 14, 2012"></button>
+        <button class="dot" data-key="2020covid"     aria-label="Mar 13, 2020"       data-label="Mar 13, 2020"></button>
+        <button class="dot" data-key="2020lease"     aria-label="Jun 21, 2020"       data-label="Jun 21, 2020"></button>
+        <button class="dot" data-key="2023demo"      aria-label="Nov 2023"           data-label="Nov 2023"></button>
+        <button class="dot" data-key="2024"          aria-label="2024"               data-label="2024"></button>
+        <button class="dot" data-key="2025award"     aria-label="Oct 2025"           data-label="Oct 2025"></button>
       </div>
     </section>
 
@@ -432,7 +565,12 @@
     <section id="viewer" aria-live="polite">
       <div class="viewer-date"></div>
       <div class="viewer-card">
-        <img class="viewer-img" src="images/test1.jpg" alt="Timeline image" />
+        <div class="viewer-media">
+          <button class="viewer-nav viewer-nav-prev" type="button" aria-label="Previous image">‹</button>
+          <img class="viewer-img" src="images/test1.jpg" alt="Timeline image" />
+          <button class="viewer-nav viewer-nav-next" type="button" aria-label="Next image">›</button>
+        </div>
+
         <div class="text-block">
           <h2 class="viewer-title">Select a date above</h2>
           <p class="viewer-desc">Click any dot to load that moment in the Taj India story.</p>
@@ -440,12 +578,13 @@
       </div>
     </section>
 
+
     <!-- Hidden full timeline list (kept for content loading) -->
     <section class="timeline" aria-hidden="true">
       <div class="event">
         <div class="date">1986</div>
         <div class="content" data-desc="./dates/1986.txt">
-          <img src="images/test1.jpg" alt="Taj India logo icon">
+          <img src="images/test1.png" alt="Taj India logo icon">
           <div class="text-block">
             <h2>Royal Taj opens, introducing Indian cuisine to Birmingham</h2>
             <p class="desc"></p>
@@ -553,7 +692,17 @@
 
   <!-- Particles canvas (present BEFORE the script runs) -->
   <canvas id="particles" aria-hidden="true"></canvas>
+  <!-- Image lightbox -->
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <div class="lightbox-backdrop"></div>
+    <div class="lightbox-content" role="dialog" aria-modal="true">
+      <button class="lightbox-close" type="button" aria-label="Close image viewer">×</button>
 
+      <button class="lightbox-nav lightbox-prev" type="button" aria-label="Previous image">‹</button>
+      <img class="lightbox-img" src="" alt="" />
+      <button class="lightbox-nav lightbox-next" type="button" aria-label="Next image">›</button>
+    </div>
+  </div>
   <script>
     // Fade in when entering view; reset when leaving
     const observer = new IntersectionObserver((entries) => {
@@ -595,82 +744,278 @@
       });
     })();
 
-    // Map dot keys -> files (txt) + image paths + titles + pretty date
+    // Map dot keys -> text files + images (single slot; some have multiple images)
     const TIMELINE_MAP = {
-      "1986":       { date:"1986",              title:"Royal Taj opens, introducing Indian cuisine to Birmingham",
-                      txt:"./dates/1986.txt",   img:"images/test1.jpg" },
-      "1994":       { date:"July 20, 1994",     title:"Taj India opens on Highland Ave with $5.95 buffet",
-                      txt:"./dates/1994.txt",   img:"images/building.jpg" },
-      "2012":       { date:"November 14, 2012", title:"First Holi Facebook post builds digital connection",
-                      txt:"./dates/2012.txt",   img:"images/community.png" },
-      "2019":       { date:"Summer 2019",       title:"25th Anniversary and reflections on Highland Plaza’s future",
-                      txt:"./dates/2019.txt",   img:"images/years (2).png" },
-      "2020covid":  { date:"March 13, 2020",    title:"COVID safety post highlights health and community care",
-                      txt:"./dates/2020-covid.txt", img:"images/covid.png" },
-      "2020lease":  { date:"June 21, 2020",     title:"Lease extension confirms stability during uncertainty",
-                      txt:"./dates/2020-lease.txt", img:"images/indoors.png" },
-      "2023redev":  { date:"July 5, 2023",      title:"Redevelopment forces relocation decision",
-                      txt:"./dates/2023-redev.txt", img:"images/staff.jpg" },
-      "2023relocate":{date:"Summer 2023",       title:"Relocation to historic Fire Station No. 22 begins",
-                      txt:"./dates/2023-relocate.txt", img:"images/fire.png" },
-      "2023demo":   { date:"November 2023",     title:"Demolition of Highland Plaza marks end of an era",
-                      txt:"./dates/2023-demo.txt", img:"images/demo.jpg" },
-      "2025award":  { date:"October 2025",      title:"National recognition — Taj India named Alabama’s top Indian restaurant",
-                      txt:"./dates/2025-award.txt", img:"images/award.jpg" },
+      "1986": {
+        date: "1986",
+        title: "Royal Taj opens, introducing Indian cuisine to Birmingham",
+        txt: "./dates/1986.txt",
+        images: ["images/test1.jpg"]
+      },
+
+      "1990s-2000s": {
+        date: "Late 1990s–2000s",
+        title: "Building a community around Indian cuisine and hospitality",
+        txt: "./dates/1990s-2000s.txt",
+        images: [
+          "images/com_1.jpg",
+          "images/com_2.jpg",
+          "images/com_3.jpg",
+          "images/com_4.jpg"
+        ]
+      },
+
+      "1994": {
+        date: "July 20, 1994",
+        title: "Taj India opens on Highland Avenue in the Highland Plaza",
+        txt: "./dates/1994.txt",
+        images: ["images/building.jpg"]
+      },
+
+      "2003": {
+        date: "January 23, 2003",
+        title: "Early website and menu help Birmingham locals understand Indian cuisine",
+        txt: "./dates/2003.txt",
+        images: [
+          "images/old.png",
+          "images/old_2.png",
+          "images/old_3.png"
+        ]
+      },
+
+      "2012": {
+        date: "November 14, 2012",
+        title: "First Holi Facebook post builds digital connection",
+        txt: "./dates/2012.txt",
+        images: [
+          "images/holi.png",
+          "images/holi_2.jpg",
+          "images/holi_3.jpg",
+          "images/holi_4.jpg"
+        ]
+      },
+
+      "2020covid": {
+        date: "March 13, 2020",
+        title: "COVID-19 safety post highlights health and community care",
+        txt: "./dates/2020-covid.txt",
+        images: ["images/covid.png"]
+      },
+
+      "2020lease": {
+        date: "June 21, 2020",
+        title: "Lease extension Reassures Regulars",
+        txt: "./dates/2020-lease.txt",
+        images: ["images/indoors.png"]
+      },
+
+      // Point 8 – just rotate through all relevant photos in the single slot
+      "2023demo": {
+        date: "November 2023",
+        title: "Demolition of Highland Plaza begins a new chapter",
+        txt: "./dates/2023-demo.txt",
+        images: [
+          "images/fire.png",
+          "images/building.jpg",
+          "images/new_1.png",
+          "images/new_2.png",
+          "images/new_3.png"
+        ]
+      },
+
+      // Point 9 – two images (anniversary + chefs), user cycles between them
+      "2024": {
+        date: "2024",
+        title: "30 years of business and one year at the new Clairmont location",
+        txt: "./dates/2024.txt",
+        images: [
+          "images/years.png",
+          "images/chefs.jpg"
+        ]
+      },
+
+      "2025award": {
+        date: "October 2025",
+        title: "National recognition:Taj India named Alabama’s top Indian restaurant",
+        txt: "./dates/2025-award.txt",
+        images: ["images/award.jpg"]
+      }
     };
 
-    const dots = document.querySelectorAll('.timeline-nav .dot');
-    const card = document.querySelector('.viewer-card');
-    const elDate = document.querySelector('.viewer-date');
-    const elTitle = document.querySelector('.viewer-title');
-    const elDesc = document.querySelector('.viewer-desc');
-    const elImg  = document.querySelector('.viewer-img');
 
-    function setActive(dot){
-      dots.forEach(d => d.classList.remove('active'));
-      dot.classList.add('active');
-    }
 
-    async function loadEntry(key){
-      const cfg = TIMELINE_MAP[key]; if(!cfg) return;
-      card.classList.remove('fade-in');
-      card.classList.add('fade-out');
+const dots   = document.querySelectorAll('.timeline-nav .dot');
+const card   = document.querySelector('.viewer-card');
+const elDate = document.querySelector('.viewer-date');
+const elTitle= document.querySelector('.viewer-title');
+const elDesc = document.querySelector('.viewer-desc');
 
-      try {
-        const res = await fetch(cfg.txt, { cache:'no-store' });
-        const text = res.ok ? (await res.text()).trim() : '(Description unavailable)';
-        setTimeout(() => {
-          elDate.textContent = cfg.date;
-          elTitle.textContent = cfg.title;
-          elDesc.textContent = text || '(Description unavailable)';
-          elImg.src = cfg.img || 'images/test1.jpg';
-          elImg.alt = cfg.title;
+const imgEl   = document.querySelector('.viewer-img');
+const prevBtn = document.querySelector('.viewer-nav-prev');
+const nextBtn = document.querySelector('.viewer-nav-next');
+// Lightbox elements
+const lightbox   = document.getElementById('lightbox');
+const lbImg      = document.querySelector('.lightbox-img');
+const lbPrev     = document.querySelector('.lightbox-prev');
+const lbNext     = document.querySelector('.lightbox-next');
+const lbClose    = document.querySelector('.lightbox-close');
+const lbBackdrop = document.querySelector('.lightbox-backdrop');
 
-          card.classList.remove('fade-out');
-          void card.offsetWidth;
-          card.classList.add('fade-in');
-        }, 260);
-      } catch(e){
-        setTimeout(() => {
-          elDate.textContent = cfg.date;
-          elTitle.textContent = cfg.title;
-          elDesc.textContent = '(Description unavailable)';
-          card.classList.remove('fade-out');
-          card.classList.add('fade-in');
-        }, 260);
-      }
-    }
+const viewerState = {
+  key: null,
+  index: 0
+};
 
-    dots.forEach(dot => {
-      dot.addEventListener('click', () => {
-        setActive(dot);
-        loadEntry(dot.dataset.key);
-      });
-    });
+function setActive(dot) {
+  dots.forEach(d => d.classList.remove('active'));
+  dot.classList.add('active');
+}
 
-    // Auto-select the first point
-    const first = document.querySelector('.timeline-nav .dot');
-    if(first){ first.click(); }
+// return array of image URLs for an entry
+function getImages(cfg) {
+  if (cfg.images && cfg.images.length) return cfg.images;
+  return [];
+}
+
+function applyImage(cfg) {
+  const imgs = getImages(cfg);
+  if (!imgs.length) {
+    imgEl.style.display = 'none';
+    prevBtn.style.display = 'none';
+    nextBtn.style.display = 'none';
+    return;
+  }
+
+  const n = imgs.length;
+  viewerState.index = ((viewerState.index % n) + n) % n;
+
+  imgEl.style.display = 'block';
+  imgEl.src = imgs[viewerState.index];
+  imgEl.alt = cfg.title;
+
+  const showNav = n > 1;
+  prevBtn.style.display = showNav ? 'flex' : 'none';
+  nextBtn.style.display = showNav ? 'flex' : 'none';
+}
+
+async function loadEntry(key) {
+  const cfg = TIMELINE_MAP[key];
+  if (!cfg) return;
+
+  viewerState.key = key;
+  viewerState.index = 0;
+
+  card.classList.remove('fade-in');
+  card.classList.add('fade-out');
+
+  try {
+    const res = await fetch(cfg.txt, { cache: 'no-store' });
+    const text = res.ok ? (await res.text()).trim() : '(Description unavailable)';
+
+    setTimeout(() => {
+      elDate.textContent = cfg.date;
+      elTitle.textContent = cfg.title;
+      elDesc.textContent  = text || '(Description unavailable)';
+
+      applyImage(cfg);
+
+      card.classList.remove('fade-out');
+      void card.offsetWidth;
+      card.classList.add('fade-in');
+    }, 260);
+  } catch (e) {
+    setTimeout(() => {
+      elDate.textContent = cfg.date;
+      elTitle.textContent = cfg.title;
+      elDesc.textContent  = '(Description unavailable)';
+
+      applyImage(cfg);
+
+      card.classList.remove('fade-out');
+      card.classList.add('fade-in');
+    }, 260);
+  }
+}
+
+function updateLightboxImage(cfg) {
+  const imgs = getImages(cfg);
+  if (!imgs.length) return;
+
+  const n = imgs.length;
+  viewerState.index = ((viewerState.index % n) + n) % n;
+
+  lbImg.src = imgs[viewerState.index];
+  lbImg.alt = cfg.title;
+
+  const showNav = n > 1;
+  lbPrev.style.display = showNav ? 'flex' : 'none';
+  lbNext.style.display = showNav ? 'flex' : 'none';
+}
+// Lightbox opening
+
+function changeImage(delta) {
+  if (!viewerState.key) return;
+  const cfg = TIMELINE_MAP[viewerState.key];
+  if (!cfg) return;
+
+  const imgs = getImages(cfg);
+  if (imgs.length <= 1) return;
+
+  const n = imgs.length;
+  viewerState.index = (viewerState.index + delta + n) % n;
+
+  applyImage(cfg);
+  if (lightbox.classList.contains('show')) {
+    updateLightboxImage(cfg);
+  }
+}
+
+function openLightbox() {
+  if (!viewerState.key) return;
+  const cfg = TIMELINE_MAP[viewerState.key];
+  if (!cfg) return;
+
+  updateLightboxImage(cfg);
+  lightbox.classList.add('show');
+  lightbox.setAttribute('aria-hidden', 'false');
+}
+
+function closeLightbox() {
+  lightbox.classList.remove('show');
+  lightbox.setAttribute('aria-hidden', 'true');
+}
+
+// dot clicks load entries
+dots.forEach(dot => {
+  dot.addEventListener('click', () => {
+    setActive(dot);
+    loadEntry(dot.dataset.key);
+  });
+});
+
+// arrow clicks cycle images when there are multiple
+prevBtn.addEventListener('click', () => changeImage(-1));
+nextBtn.addEventListener('click', () => changeImage(1));
+// Click main image to open lightbox
+imgEl.addEventListener('click', openLightbox);
+
+// Lightbox controls
+lbPrev.addEventListener('click', () => changeImage(-1));
+lbNext.addEventListener('click', () => changeImage(1));
+lbClose.addEventListener('click', closeLightbox);
+lbBackdrop.addEventListener('click', closeLightbox);
+
+// Close on Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && lightbox.classList.contains('show')) {
+    closeLightbox();
+  }
+});
+
+// Auto-select the first point
+const first = document.querySelector('.timeline-nav .dot');
+if (first) { first.click(); }
+
 
     // Particles — ensure canvas exists before using it
     document.addEventListener('DOMContentLoaded', () => {
@@ -694,7 +1039,7 @@
           : canvas.width - Math.random() * 200;
         const y = canvas.height + 20;
         const size = Math.random() * 4 + 2;
-        const speedY = Math.random() * 0.5 + 0.2;
+        const speedY = Math.random() * 0.5 + 0.4;
         const opacity = Math.random() * 0.5 + 0.5;
         return { x, y, size, speedY, opacity };
       }
@@ -708,7 +1053,7 @@
           ctx.fill();
           p.y -= p.speedY;
           p.x += Math.sin(p.y * 0.02) * 0.3;
-          p.opacity -= 0.0015;
+          p.opacity -= 0.0008;
         }
         particles = particles.filter(p => p.opacity > 0);
       }
